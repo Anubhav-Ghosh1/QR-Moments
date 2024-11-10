@@ -10,7 +10,6 @@ const userSchema = new mongoose.Schema(
       unique: true,
       lowercase: true,
       trim: true,
-      index: true, // make search fast
     },
     email: {
       type: String,
@@ -27,7 +26,7 @@ const userSchema = new mongoose.Schema(
     },
     accountType: {
       type: String,
-      enum: ["Customer", "Restaurant"],
+      enum: ["Owner", "Guest"],
       default: "Customer",
     },
     avatar: {
@@ -46,20 +45,6 @@ const userSchema = new mongoose.Schema(
     },
     cloudinary_avatar_public_id: {
       type: String,
-    },
-    cloudinary_coverImage_public_id: {
-      type: String,
-    },
-    location: {
-      type: {
-        type: String,
-        enum: ['Point'], // 'location.type' must be 'Point'
-        required: true,
-      },
-      coordinates: {
-        type: [Number], // Array of numbers: [longitude, latitude]
-        required: true,
-      },
     },
   },
   { timestamps: true }

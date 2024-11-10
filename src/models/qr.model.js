@@ -15,6 +15,11 @@ const qrSchema = new mongoose.Schema({
     validTill:
     {
         type: Date,
+    },
+    visitorCount:
+    {
+        type: Number,
+        default: 0,
     }
 },{timestamps: true});
 
