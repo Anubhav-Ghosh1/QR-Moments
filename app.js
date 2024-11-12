@@ -36,9 +36,17 @@ app.use(express.urlencoded({extended: true, limit: "16kb"}));
 app.use(express.static("public"));
 app.use(cookieParser());
 app.use("/api/v1/users",userRoute);
-app.use("/api/v1/restaurant",restaurantRoute);
-app.use("/api/v1/orders",orderRoute);
-app.use("/api/v1/review",reviewRoute);
-app.use("/api/v1/coupon",couponRoute);
-app.use("/api/v1/dashboard",dashboardRoute);
+
+import cron from "node-cron";
+import { sendPhoto } from "./src/controllers/photo.controller.js";
+// Schedule the job to run daily at midnight
+cron.schedule("0 0 * * *", async () => {
+    try {
+        console.log("Running sendPhotosAfterExpiry job at midnight...");
+        await sendPhoto();
+    } catch (error) {
+        console.error("Error running sendPhotosAfterExpiry job:", error);
+    }
+});
+
 export { app };
